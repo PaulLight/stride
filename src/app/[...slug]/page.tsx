@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getClient } from "@/lib/magento/client";
 import { RouteQuery } from "@/lib/magento/queries/route";
+import CategoryTree from "@/components/catalog/CategoryTree";
 
 type Props = {
     params: Promise<{ slug: string[] }>
@@ -39,13 +40,7 @@ export default async function RoutePage({ params }: Props) {
                 </div>
             )
         case "CategoryTree":
-            return (
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <p className="text-sm font-mono text-cobalt">{route.__typename}</p>
-                    <h1 className="font-display text-3xl font-white mt-2">{route.name}</h1>
-                    <p className="font-display text-sm mt-2">{route.url_key}</p>
-                </div>
-            )
+            return <CategoryTree route={route} />
         case "CmsPage":
             return (
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

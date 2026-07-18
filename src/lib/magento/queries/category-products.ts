@@ -1,16 +1,21 @@
 import { graphql } from "@/lib/magento/generated";
 
-export const ProductsQuery = graphql(`
-    query TrendingProducts(
+export const CategoryProductsQuery = graphql(`
+    query categoryData(
+        $categoryUid: String!
         $search: String
+        $currentPage: Int
         $sort: ProductAttributeSortInput
         $pageSize: Int
     ) {
         products(
             search: $search
             sort: $sort
+            currentPage: $currentPage
+            filter: { category_uid: { eq: $categoryUid } }
             pageSize: $pageSize
         ) {
+            total_count
             items {
                 uid
                 name
@@ -30,6 +35,12 @@ export const ProductsQuery = graphql(`
                         }
                     }
                 }
+            }
+            page_info {
+                __typename
+                current_page
+                page_size
+                total_pages
             }
         }
     }

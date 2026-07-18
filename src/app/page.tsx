@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Image from "next/image"
+import ProductCard from "@/components/ui/ProductCard";
 import { getCategories } from "@/lib/magento/api/categories";
 import { getProducts } from "@/lib/magento/api/products";
 
@@ -51,30 +51,7 @@ export default async function Home() {
                   </h2>
                   <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
                       {products.map((product) => (
-                          <Link
-                              key={product.uid}
-                              href={`/${product.url_key ?? ""}${product.url_suffix ?? ""}`}
-                              className="group"
-                          >
-                              {product.small_image?.url && (
-                                  <div className="aspect-4/5 overflow-hidden rounded bg-mist/10">
-                                      <Image
-                                          src={product.small_image.url}
-                                          alt={product.small_image.label ?? product.name ?? ""}
-                                          width={400}
-                                          height={500}
-                                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                      />
-                                  </div>
-                              )}
-                              <p className="mt-3 text-sm font-medium">
-                                  {product.name}
-                              </p>
-                              <p className="mt-1 font-mono text-sm opacity-60">
-                                  {product.price_range?.minimum_price?.final_price?.currency}{" "}
-                                  {product.price_range?.minimum_price?.final_price?.value?.toFixed(2)}
-                              </p>
-                          </Link>
+                          <ProductCard key={product.uid} product={product} />
                       ))}
                   </div>
               </section>

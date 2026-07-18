@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Archivo, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { ApolloProvider } from '@/lib/magento/apollo-provider';
+import Header from "@/components/layout/Header"
+import Footer from "@/components/layout/Footer"
 
 const inter = Inter({
   weight: ['400', '500', '600'],
@@ -38,7 +40,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ApolloProvider>
-          {children}
+          <Header />
+          <main className="flex-1">
+            {children}
+          </main>
+          <Footer />
         </ApolloProvider>
       </body>
     </html>

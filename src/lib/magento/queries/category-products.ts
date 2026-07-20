@@ -2,7 +2,7 @@ import { graphql } from "@/lib/magento/generated";
 
 export const CategoryProductsQuery = graphql(`
     query categoryData(
-        $categoryUid: String!
+        $uid: String!
         $search: String
         $currentPage: Int
         $sort: ProductAttributeSortInput
@@ -12,7 +12,7 @@ export const CategoryProductsQuery = graphql(`
             search: $search
             sort: $sort
             currentPage: $currentPage
-            filter: { category_uid: { eq: $categoryUid } }
+            filter: { category_uid: { eq: $uid } }
             pageSize: $pageSize
         ) {
             total_count
@@ -41,6 +41,15 @@ export const CategoryProductsQuery = graphql(`
                 current_page
                 page_size
                 total_pages
+            }
+            sort_fields {
+                __typename
+                default
+                options {
+                    __typename
+                    label
+                    value
+                }
             }
         }
     }

@@ -4,11 +4,13 @@ import { RouteQuery } from "@/lib/magento/queries/route";
 import CategoryTree from "@/components/catalog/CategoryTree";
 
 type Props = {
-    params: Promise<{ slug: string[] }>
+    params: Promise<{ slug: string[] }>;
+    searchParams: Promise<Record<string, string>>;
 }
 
-export default async function RoutePage({ params }: Props) {
+export default async function RoutePage({ params, searchParams }: Props) {
     const { slug } = await params;
+    const query = await searchParams;
 
     const path = slug.join("/");
 
@@ -40,7 +42,13 @@ export default async function RoutePage({ params }: Props) {
                 </div>
             )
         case "CategoryTree":
-            return <CategoryTree route={route} />
+            return (
+                <CategoryTree
+                    path={path}
+                    route={route}
+                    searchParams={query}
+                />
+            )
         case "CmsPage":
             return (
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

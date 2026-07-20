@@ -1,20 +1,22 @@
-import type { ProductAttributeSortInput, TrendingProductsQuery } from "@/lib/magento/generated/graphql";
 import { getClient } from "@/lib/magento/client";
 import { ProductsQuery } from "@/lib/magento/queries/products";
+
+import type {
+    ProductAttributeSortInput,
+} from "@/lib/magento/generated/graphql";
+import type {
+    TrendingProduct
+} from "@/lib/magento/types/products-widget"
 
 const DEFAULT_SORT: ProductAttributeSortInput = {
     position: 'ASC' as const,
 };
 
-type ProductsData = NonNullable<TrendingProductsQuery['products']>;
-type ProductItems = NonNullable<ProductsData['items']>;
-type Product = NonNullable<ProductItems[number]>;
-
 export async function getProducts(
     search = "",
     pageSize = 8,
     sort: ProductAttributeSortInput = DEFAULT_SORT
-): Promise<Product[]> {
+): Promise<TrendingProduct[]> {
     const { data } = await getClient().query({
         query: ProductsQuery,
         variables: {
